@@ -4,7 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-f = open('lsmdata1_test.csv','r')
+f = open('lsmdata4_train.csv','r')
+degrees = 1
 
 all_list = list() 
 
@@ -35,17 +36,26 @@ for item in all_list:
 array_x =[float(f) for f in np.array(x)]
 array_y =[float(f) for f in np.array(y)]
 
+min_x = np.min(array_x)
+min_y = np.min(array_y)
+
+max_x = np.max(array_x)
+max_y = np.max(array_y)
 
 #インポートしたcsvをグラフにプロット
 plt.scatter(array_x,array_y,label="sample")
 
 
 #サンプルをもとに最小二乗法の関数を計算
-lsm_result = np.poly1d(np.polyfit(array_x,array_y,1))
+lsm_result = np.poly1d(np.polyfit(array_x,array_y,degrees))
 
 #グラフにプロットする
 #np.linspace()は指定範囲に等間隔な点を生成する関数 使い方は調べてください
-plt.plot(np.linspace(-30,30,100),lsm_result(np.linspace(-30,30,100)),label="result")
+plt.plot(np.linspace(min_x,max_x,10000),lsm_result(np.linspace(min_x,max_x,10000)),label="result")
+
+# plt.xlim(min_x-5,max_x+5)
+# plt.ylim(min_y-5,max_y+5)
+
 plt.show()
 
 
